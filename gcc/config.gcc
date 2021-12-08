@@ -912,6 +912,12 @@ case ${target} in
   gnu_ld=yes
   default_use_cxa_atexit=yes
   ;;
+*-*-prizm*)
+  gas=yes
+  gnu_ld=yes
+  default_use_cxa_atexit=yes
+  use_gcc_stdint=wrap
+  ;;
 *-*-rtems*)
   case ${enable_threads} in
     "" | yes | rtems) thread_file='rtems' ;;
@@ -3320,6 +3326,13 @@ sh-*-elf* | sh[12346l]*-*-elf* | \
 		tm_defines="$tm_defines SUPPORT_SH1=1 SUPPORT_SH2E=1 SUPPORT_SH4=1 SUPPORT_SH4_SINGLE=1 SUPPORT_SH2A=1 SUPPORT_SH2A_SINGLE=1"
 	fi
 	tm_file="$tm_file ./sysroot-suffix.h"
+	tmake_file="$tmake_file t-sysroot-suffix"
+	;;
+sh*-*-prizm*)
+	TM_ENDIAN_CONFIG=mb
+	tm_file="${tm_file} dbxelf.h elfos.h sh/elf.h sh/newlib.h sh/embed-elf.h newlib-stdint.h ./sysroot-suffix.h"
+	sh_cpu_target=sh4a-nofpu
+	sh_cpu_default=${sh_cpu_target}
 	tmake_file="$tmake_file t-sysroot-suffix"
 	;;
 sh-*-rtems*)
